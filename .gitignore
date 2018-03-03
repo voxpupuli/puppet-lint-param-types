@@ -1,0 +1,8 @@
+/.bundle/
+/vendor/gems/
+/Gemfile.lock
+*.swp
+.DS_Store
+*~
+.\#*
+coverage/
