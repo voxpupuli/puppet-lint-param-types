@@ -11,15 +11,12 @@ Gem::Specification.new do |spec|
     'lib/**/*',
     'spec/**/*',
   ]
-  spec.test_files  = Dir['spec/**/*']
   spec.summary     = 'puppet-lint check that validates that all parameters are typed'
   spec.description = <<-EOF
     A new check for puppet-lint that validates that all parameters are typed.
   EOF
 
-  spec.add_dependency             'puppet-lint', '>= 1.1', '< 4'
-  spec.add_development_dependency 'rspec', '~> 3.0'
-  spec.add_development_dependency 'rspec-its', '~> 1.0'
-  spec.add_development_dependency 'rspec-collection_matchers', '~> 1.0'
-  spec.add_development_dependency 'rake'
+  spec.required_ruby_version = '>= 2.7.0'
+
+  spec.add_dependency 'puppet-lint', '>= 3', '< 5'
 end
