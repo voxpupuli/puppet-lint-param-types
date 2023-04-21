@@ -2,6 +2,7 @@ PuppetLint.new_check(:parameter_types) do
   def check
     (class_indexes + defined_type_indexes).each do |idx|
       next if idx[:param_tokens].nil?
+
       # https://github.com/puppetlabs/puppet-specifications/blob/master/language/catalog_expressions.md
       # Each individual parameter in the parameter list must start with
       # either a datatype or a variable name, so testing whether the parameter is typed
@@ -10,7 +11,7 @@ PuppetLint.new_check(:parameter_types) do
       paren_stack = []
       data_stack = []
       idx[:param_tokens].each do |token|
-        next if [ :NEWLINE, :WHITESPACE, :INDENT, :COMMENT, :MLCOMMENT, :SLASH_COMMENT].include?(token.type)
+        next if %i[NEWLINE WHITESPACE INDENT COMMENT MLCOMMENT SLASH_COMMENT].include?(token.type)
 
         case state
         when :ST_BEGIN
@@ -20,9 +21,9 @@ PuppetLint.new_check(:parameter_types) do
             state = :ST_SKIP_TYPE
           elsif token.type == :VARIABLE
             notify :warning, {
-              :message => "missing datatype for parameter #{idx[:name_token].value}::#{token.value}",
-              :line    => token.line,
-              :column  => token.column
+              message: "missing datatype for parameter #{idx[:name_token].value}::#{token.value}",
+              line: token.line,
+              column: token.column,
             }
             state = :ST_SKIP
           end
@@ -39,13 +40,11 @@ PuppetLint.new_check(:parameter_types) do
             data_stack.pop
           elsif token.type == :COMMA && data_stack.empty? && paren_stack.empty?
             state = :ST_BEGIN
-        end
+          end
         # Datatypes cannot have variables so when a variable is found it must be
         # end of the data type
         when :ST_SKIP_TYPE
-          if token.type == :VARIABLE
-            state = :ST_SKIP
-          end
+          state = :ST_SKIP if token.type == :VARIABLE
         end
       end
     end
