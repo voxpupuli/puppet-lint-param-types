@@ -1,7 +1,7 @@
 Gem::Specification.new do |spec|
   spec.name        = 'puppet-lint-param-types'
-  spec.version     = '2.0.0'
-  spec.homepage    = 'https://github.com/hostnet/puppet-lint-param-types'
+  spec.version     = '3.0.0'
+  spec.homepage    = 'https://github.com/voxpupuli/puppet-lint-param-types'
   spec.license     = 'MIT'
   spec.author      = 'Vox Pupuli'
   spec.email       = 'voxpupuli@groups.io'
